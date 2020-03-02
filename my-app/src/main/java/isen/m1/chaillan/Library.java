@@ -1,9 +1,10 @@
 package isen.m1.chaillan;
 
+
 /**
  * Library
  */
-public class Library implements BookFactory {
+public class Library extends BookFactory {
 
     private static Library instance;
 
@@ -13,8 +14,12 @@ public class Library implements BookFactory {
 
     @Override
     public PaperBook createBook(String title) {
-       
-        return new PaperBook(title);
+       if (super.checkTitleBook(title)) {
+           return new PaperBook(title);
+       }
+       //TODO creer une exception 
+       System.out.println("le livre n'a pas de titre");
+        return new PaperBook();
     }
 
     @Override

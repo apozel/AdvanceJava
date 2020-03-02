@@ -3,7 +3,7 @@ package isen.m1.chaillan;
 /**
  * KindleLibrary
  */
-public class KindleLibrary implements BookFactory {
+public class KindleLibrary extends BookFactory {
 
     private static KindleLibrary instance;
 
@@ -22,8 +22,12 @@ public class KindleLibrary implements BookFactory {
 
     @Override
     public Book createBook(String title) {
-
-        return new KindleBook(title);
+        if (super.checkTitleBook(title)) {
+            return new KindleBook(title);
+        }
+        // TODO creer une exception
+        System.out.println("le livre n'a pas de titre");
+        return new KindleBook();
     }
 
     @Override
