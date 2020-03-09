@@ -13,6 +13,10 @@ import org.junit.Test;
 import isen.m1.chaillan.exception.KindleIsnbFormatException;
 import isen.m1.chaillan.exception.TitleIsEmptyException;
 import isen.m1.chaillan.exception.TitleIsNullException;
+import isen.m1.chaillan.factory.KindleLibrary;
+import isen.m1.chaillan.factory.Library;
+import isen.m1.chaillan.util.Book;
+import isen.m1.chaillan.util.KindleBook;
 
 /**
  * Unit test for simple App.
@@ -96,6 +100,16 @@ public class BookTest {
     @Test(expected = KindleIsnbFormatException.class)
     public void testIsbnKindle() {
         KindleLibrary.getInstance().createBook("le livre").setIsbn("XXXX");
+    }
+
+    @Test
+    public void testPrintError() {
+        try {
+            KindleBook book = KindleLibrary.getInstance().createBook(null);
+        } catch (Exception e) {
+            System.err.println(e);
+        } 
+
     }
 
 }

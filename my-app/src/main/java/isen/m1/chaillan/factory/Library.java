@@ -1,9 +1,10 @@
-package isen.m1.chaillan;
+package isen.m1.chaillan.factory;
 
 import java.text.DateFormat;
 
 import isen.m1.chaillan.exception.TitleIsEmptyException;
 import isen.m1.chaillan.exception.TitleIsNullException;
+import isen.m1.chaillan.util.PaperBook;
 
 /**
  * Library
@@ -16,6 +17,7 @@ public class Library extends BookFactory {
 
     }
 
+    
     @Override
     public PaperBook createBook(String title) throws TitleIsEmptyException, TitleIsNullException {
         if (title != null) {
@@ -30,6 +32,13 @@ public class Library extends BookFactory {
         }
         throw new TitleIsNullException("title is null");
 
+    }
+
+    
+    public PaperBook createBook(String title, String isbn) throws TitleIsEmptyException, TitleIsNullException{
+        PaperBook returnBook = this.createBook(title);
+        returnBook.setIsbn(isbn);
+        return returnBook; 
     }
 
     @Override

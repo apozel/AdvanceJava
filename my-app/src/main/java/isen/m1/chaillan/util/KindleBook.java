@@ -1,4 +1,4 @@
-package isen.m1.chaillan;
+package isen.m1.chaillan.util;
 
 import org.apache.commons.lang3.StringUtils;
 

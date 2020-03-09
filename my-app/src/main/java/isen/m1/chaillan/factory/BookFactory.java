@@ -1,4 +1,4 @@
-package isen.m1.chaillan;
+package isen.m1.chaillan.factory;
 
 import java.text.DateFormat;
 import java.util.Locale;
@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import isen.m1.chaillan.exception.TitleIsEmptyException;
 import isen.m1.chaillan.exception.TitleIsNullException;
+import isen.m1.chaillan.util.Book;
 
 /**
  * BookFactory

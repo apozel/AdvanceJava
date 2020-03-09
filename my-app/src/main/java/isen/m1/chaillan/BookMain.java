@@ -2,6 +2,10 @@ package isen.m1.chaillan;
 
 import java.util.ArrayList;
 
+import isen.m1.chaillan.factory.KindleLibrary;
+import isen.m1.chaillan.factory.Library;
+import isen.m1.chaillan.util.Book;
+
 /**
  * BookMain
  */
