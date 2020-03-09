@@ -5,7 +5,7 @@ package isen.m1.chaillan;
  */
 public class PaperBook extends Book{
 
-    public PaperBook(String title) {
+    public PaperBook(String title)  {
         super(title);
     }
 

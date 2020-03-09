@@ -1,5 +1,6 @@
 package isen.m1.chaillan;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -11,8 +12,10 @@ public class Book {
     private String title;
     private Double price;
     private Date issueDate;
+    private DateFormat format;
 
     public Book(String title) {
+        
         this.title = title;
     }
 
@@ -48,7 +51,26 @@ public class Book {
     }
 
     public void setIssueDate(Date issueDate) {
+
         this.issueDate = issueDate;
+    }
+
+    @Override
+    public String toString() {
+        String returnString = "Book [isbn=" + isbn + ", price=" + price + ", title=" + title;
+        if (format != null) {
+            return returnString += ", issueDate=" + format.format(issueDate) + " ]";
+        }
+        return returnString += ", issueDate=" + issueDate + " ]";
+
+    }
+
+    public DateFormat getFormat() {
+        return format;
+    }
+
+    public void setFormat(DateFormat format) {
+        this.format = format;
     }
 
 }

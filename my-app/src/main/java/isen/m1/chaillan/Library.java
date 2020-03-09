@@ -1,5 +1,9 @@
 package isen.m1.chaillan;
 
+import java.text.DateFormat;
+
+import isen.m1.chaillan.exception.TitleIsEmptyException;
+import isen.m1.chaillan.exception.TitleIsNullException;
 
 /**
  * Library
@@ -13,18 +17,24 @@ public class Library extends BookFactory {
     }
 
     @Override
-    public PaperBook createBook(String title) {
-       if (super.checkTitleBook(title)) {
-           return new PaperBook(title);
-       }
-       //TODO creer une exception 
-       System.out.println("le livre n'a pas de titre");
-        return new PaperBook();
+    public PaperBook createBook(String title) throws TitleIsEmptyException, TitleIsNullException {
+        if (title != null) {
+            if (super.checkTitleBook(title)) {
+                PaperBook returnBook = new PaperBook(super.toUpperCaseTitle(title));
+                if (this.getDateformat() != null) {
+                    returnBook.setFormat(this.getDateformat());
+                }
+                return returnBook;
+            }
+            throw new TitleIsEmptyException("title is empty");
+        }
+        throw new TitleIsNullException("title is null");
+
     }
 
     @Override
     public PaperBook createBook() {
-        
+
         return new PaperBook();
     }
 
@@ -36,6 +46,18 @@ public class Library extends BookFactory {
             instance = new Library();
         }
         return instance;
+    }
+
+    @Override
+    public DateFormat getDateformat() {
+        // TODO Auto-generated method stub
+        return super.getDateformat();
+    }
+
+    @Override
+    public void setDateformat(DateFormat dateformat) {
+        // TODO Auto-generated method stub
+        super.setDateformat(dateformat);
     }
 
     

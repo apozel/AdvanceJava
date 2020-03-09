@@ -1,5 +1,10 @@
 package isen.m1.chaillan;
 
+import java.text.DateFormat;
+
+import isen.m1.chaillan.exception.TitleIsEmptyException;
+import isen.m1.chaillan.exception.TitleIsNullException;
+
 /**
  * KindleLibrary
  */
@@ -21,19 +26,36 @@ public class KindleLibrary extends BookFactory {
     }
 
     @Override
-    public Book createBook(String title) {
-        if (super.checkTitleBook(title)) {
-            return new KindleBook(title);
+    public KindleBook createBook(String title) throws TitleIsEmptyException, TitleIsNullException {
+        if (title != null) {
+            if (super.checkTitleBook(title)) {
+                KindleBook returnBook = new KindleBook(super.toUpperCaseTitle(title));
+                if (this.getDateformat() != null) {
+                    returnBook.setFormat(this.getDateformat());
+                }
+                return returnBook;
+            }
+            throw new TitleIsEmptyException("title is empty");
         }
-        // TODO creer une exception
-        System.out.println("le livre n'a pas de titre");
+        throw new TitleIsNullException("title is null");
+    }
+
+    @Override
+    public KindleBook createBook() {
+
         return new KindleBook();
     }
 
     @Override
-    public Book createBook() {
+    public DateFormat getDateformat() {
+       
+        return super.getDateformat();
+    }
 
-        return new KindleBook();
+    @Override
+    public void setDateformat(DateFormat dateformat) {
+        
+        super.setDateformat(dateformat);
     }
 
 }
