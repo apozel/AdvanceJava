@@ -7,7 +7,7 @@ import java.util.Date;
  * Hello world!
  *
  */
-public class Book {
+public class Book implements Comparable {
     private String isbn;
     private String title;
     private Double price;
@@ -15,7 +15,7 @@ public class Book {
     private DateFormat format;
 
     public Book(String title) {
-        
+
         this.title = title;
     }
 
@@ -71,6 +71,41 @@ public class Book {
 
     public void setFormat(DateFormat format) {
         this.format = format;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Book other = (Book) obj;
+        if (isbn == null) {
+            if (other.isbn != null)
+                return false;
+        } else if (!isbn.equals(other.isbn))
+            return false;
+        return true;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (this.equals(o)) {
+            return 0;
+        } else {
+            Book other = (Book) o;
+            return this.getTitle().compareTo(other.getTitle());
+        }
     }
 
 }

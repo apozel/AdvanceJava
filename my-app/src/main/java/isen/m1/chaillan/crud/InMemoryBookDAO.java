@@ -17,26 +17,30 @@ public class InMemoryBookDAO implements BookDAO {
 
     private static final SortedSet<Book> bookSet = new ConcurrentSkipListSet<Book>();
 
-    private InMemoryBookDAO() {        
+    private InMemoryBookDAO() {
     }
-     
+
     public static synchronized InMemoryBookDAO getInstance() {
         if (instance == null) {
             instance = new InMemoryBookDAO();
         }
         return instance;
     }
+
     @Override
-    public boolean deleteBook(Book book) throws NoSuchBookException{
-       if(bookSet.remove(book)){
-           return true;
-       }
-        throw new NoSuchBookException("this book didn't exist");
+    public boolean deleteBook(Book book) throws NoSuchBookException {
+        try {
+            bookSet.remove(findByIsbn(book.getIsbn()));
+            return true;
+        } catch (Exception e) {
+            throw new NoSuchBookException("this book didn't exist");
+        }
+
     }
 
     @Override
     public Set<Book> findAll() {
-        
+
         return bookSet;
     }
 
@@ -47,26 +51,27 @@ public class InMemoryBookDAO implements BookDAO {
                 return book;
             }
         }
-        throw new NoSuchBookException("this book didn't exist");
+        throw new NoSuchIsnbException("this book didn't exist");
     }
 
     @Override
     public boolean insertBook(Book book) {
-        if(bookSet.add(book))
-        return true;
+        if (bookSet.add(book))
+            return true;
 
         return false;
     }
 
     @Override
     public boolean updateBook(Book book) throws NoSuchBookException {
-        this.deleteBook(this.findByIsbn(book.getIsbn()));
-        if(this.insertBook(book))
-        return true;
+
+        if (bookSet.contains(book)) {
+            bookSet.remove(book);
+            bookSet.add(book);
+            return true;
+        }
 
         throw new NoSuchBookException("this book didn't exist");
     }
 
-    
-    
 }
