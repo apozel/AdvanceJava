@@ -5,6 +5,11 @@ package isen.m1.chaillan;
  */
 public class ServerCloseException extends Exception {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8698433015797658301L;
+
     public ServerCloseException() {
     }
 
