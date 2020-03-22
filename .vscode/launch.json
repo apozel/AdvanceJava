@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - BookMainIO",
+            "request": "launch",
+            "mainClass": "isen.m1.chaillan.BookMainIO",
+            "projectName": "Book"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - App",
             "request": "launch",
             "mainClass": "isen.m1.chaillan.App"

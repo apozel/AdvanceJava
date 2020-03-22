@@ -20,12 +20,16 @@ import javax.management.ObjectName;
 
 import isen.m1.chaillan.ServerAdmin.ServerStatus;
 
+import isen.m1.chaillan.crud.DiskBookDAO;
+
 /**
  * Hello world!
  *
  */
 public class App {
     private static ExecutorService executor = Executors.newFixedThreadPool(20);
+    private DiskBookDao memoryBooks = DiskBookDao.getInstance();
+
     public static void main(String[] args)
             throws IOException, InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException {
         int serverPort;
