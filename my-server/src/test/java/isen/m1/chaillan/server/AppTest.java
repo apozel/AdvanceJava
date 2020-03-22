@@ -1,4 +1,4 @@
-package isen.m1.chaillan;
+package isen.m1.chaillan.server;
 
 import static org.junit.Assert.assertTrue;
 

@@ -1,4 +1,4 @@
-package isen.m1.chaillan;
+package isen.m1.chaillan.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,9 +18,9 @@ import javax.management.MBeanServer;
 import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
-import isen.m1.chaillan.ServerAdmin.ServerStatus;
-
+import isen.m1.chaillan.server.ServerAdmin.ServerStatus;
 import isen.m1.chaillan.crud.DiskBookDAO;
+import isen.m1.chaillan.util.Book;
 
 /**
  * Hello world!
@@ -28,7 +28,7 @@ import isen.m1.chaillan.crud.DiskBookDAO;
  */
 public class App {
     private static ExecutorService executor = Executors.newFixedThreadPool(20);
-    private DiskBookDao memoryBooks = DiskBookDao.getInstance();
+    private DiskBookDAO memoryBooks = DiskBookDAO.getInstance();
 
     public static void main(String[] args)
             throws IOException, InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException {
@@ -73,6 +73,7 @@ public class App {
         } finally {
             executor.shutdown();
             server.close();
+            memoryBooks.close();
         }
     }
 
@@ -97,23 +98,27 @@ public class App {
 
                 InputStream is = client.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                String Line = reader.readLine();
-                System.out.println(Line);
+                String line = reader.readLine();
+                System.out.println(line);
+                if (line.contains("/books")) {
+                    System.out.println("return :");
+                    OutputStream os = client.getOutputStream();
+                    PrintWriter pr = new PrintWriter(os);
 
-                OutputStream os = client.getOutputStream();
-                PrintWriter pr = new PrintWriter(os);
+                    pr.print("HTTP/1.1 200 \r\n");
+                    pr.print("Content-Type: text/html\r\n");
+                    pr.print("Connection: close\r\n");
+                    pr.print("\r\n");
+                    pr.println("<body><ul>" );
+                    for (Book book : memoryBooks.findAll()) {
+                        pr.println("<li> " + book.getTitle() + " </li>" );
+                    }
+                    pr.print("</ul>" + " \r \n" + "</body>");
+                    pr.flush();
+                }
 
-                Thread.sleep(500);
-
-                pr.print("HTTP/1.1 200 \r\n");
-                pr.print("Content-Type: text/html\r\n");
-                pr.print("Connection: close\r\n");
-                pr.print("\r\n");
-                pr.print("<html><body><h1>hello world</h1></body></html>" + " \r \n");
-                pr.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } 
+            catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 if (client != null)
